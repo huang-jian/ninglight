@@ -3,21 +3,464 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人主页</title>
+    <title>宁光集 | ninglight</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 100%; }
-        h1 { color: #2c3e50; margin-bottom: 10px; }
-        p { color: #7f8c8d; line-height: 1.6; }
-        .btn { display: inline-block; padding: 10px 20px; background-color: #3498db; color: white; text-decoration: none; border-radius: 5px; margin-top: 15px; transition: 0.3s; }
-        .btn:hover { background-color: #2980b9; }
+        /* 全局优雅艺术风格 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Noto Serif SC', 'Hiragino Sans GB', serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f7fafc; /* 极其柔和的浅灰蓝 */
+            color: #2d3748;
+            line-height: 1.8;
+        }
+
+        /* 导航栏 */
+        header {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 600;
+            color: #4a5568;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            font-size: 14px;
+            color: #a0aec0;
+            font-weight: 400;
+            margin-left: 5px;
+        }
+
+        nav a {
+            color: #4a5568;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #3182ce; /* 水蓝色 */
+        }
+
+        /* 主视觉区 (Hero Section) */
+        .hero {
+            background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(247, 250, 252, 0.95)), 
+                        url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200') no-repeat center center/cover;
+            height: 55vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 500;
+            color: #1a202c;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: #718096;
+            max-width: 600px;
+            letter-spacing: 2px;
+        }
+
+        /* 主体布局 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 35px;
+            text-align: center;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background-color: #3182ce;
+            margin: 10px auto 0 auto;
+        }
+
+        /* 个人简介 */
+        .intro-box {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .intro-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .intro-text p {
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* 板块1：游泳与荣誉 */
+        .sports-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .sports-info {
+            flex: 1;
+            min-width: 300px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        .sports-info h3 {
+            color: #2b6cb0;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .medal-list {
+            list-style: none;
+        }
+
+        .medal-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .medal-list li span.honor {
+            color: #e53e3e;
+            font-weight: bold;
+        }
+
+        /* 板块2：图片画廊（画作长廊） */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-img {
+            height: 240px;
+            background-size: cover;
+            background-position: center;
+            background-color: #e2e8f0;
+        }
+
+        .gallery-desc {
+            padding: 15px;
+            font-size: 14px;
+            color: #4a5568;
+            text-align: center;
+            border-top: 1px solid #f7fafc;
+        }
+
+        /* 板块3：校园生活 */
+        .school-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .school-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border-top: 3px solid #63b3ed;
+        }
+
+        .school-card h3 {
+            font-size: 18px;
+            color: #2d3748;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .school-card p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        /* 板块4：作文展示 */
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .article-card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            transition: border-left 0.2s;
+            border-left: 0px solid #3182ce;
+        }
+
+        .article-card:hover {
+            border-left: 4px solid #3182ce;
+        }
+
+        .article-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .article-meta {
+            font-size: 13px;
+            color: #a0aec0;
+            margin-bottom: 12px;
+        }
+
+        .article-excerpt {
+            color: #718096;
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: #ffffff;
+            text-align: center;
+            padding: 30px;
+            font-size: 13px;
+            color: #a0aec0;
+            border-top: 1px solid #e2e8f0;
+            letter-spacing: 1px;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .hero h1 { font-size: 32px; }
+            .intro-box { padding: 25px; }
+            nav a { margin-left: 15px; font-size: 14px; }
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>你好，我是主人的新网站！👋</h1>
-        <p>这是我人生中第一个不花钱、不需要服务器的个人网站。目前它正静静地躺在我的电脑里，但马上它就要去 Cloudflare 环游世界了。</p >
-        <a href=" " target="_blank" class="btn">了解 Cloudflare</a >
+
+    <!-- 导航栏 -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">宁光集<span>ninglight</span></div>
+            <nav>
+                <a href=" ">关于我</a >
+                <a href="#sports">运动生涯</a >
+                <a href="#gallery">画作长廊</a >
+                <a href="#school">校园生活</a >
+                <a href="#writing">文墨馨香</a >
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主视觉区 -->
+    <div class="hero">
+        <h1>宁光集</h1>
+        <p>“水中有击水搏浪的速度，笔下有静谧美好的风景。”<br>这里是一个13岁初一女孩的成长小天地。</p >
     </div>
+
+    <!-- 主体内容 -->
+    <div class="container">
+
+        <!-- 关于我 -->
+        <section id="about">
+            <h2>✨ 关于我</h2>
+            <div class="intro-box">
+                <div class="intro-text">
+                    <p>你好，我是浩宁。今年13岁，目前是一名初一的学生。生活中的我有着两个截然不同的世界：一个是充满了浪花、哨鸣与速度的蓝色泳池；另一个是流淌着色彩、线条与巧思的安静画室。</p >
+                    <p>我喜欢用画笔捕捉生活里的每一个触动，在课堂上汲取新知，也喜欢用文字整理成长路上的所思所感。很高兴能在这个小小的网页里，与你分享我的初中时代。</p >
+                    <div class="tags">
+                        <span class="tag"># 初一女生</span>
+                        <span class="tag"># 仰泳运动员</span>
+                        <span class="tag"># 绘画爱好者</span>
+                        <span class="tag"># 记录生活</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块1：游泳与荣誉（运动生涯） -->
+        <section id="sports">
+            <h2>🏊‍♀️ 运动生涯</h2>
+            <div class="sports-container">
+                <div class="sports-info">
+                    <h3>泳池里的飞鱼梦</h3>
+                    <p style="color: #64748b; font-size: 15px; margin-bottom: 15px;">
+                        从大连市队到辽宁省队，泳池里的那条黑色泳道见证了我无数次的出发与触壁。每一次起跳、每一次摆臂、每一次仰望天空的呼吸，都凝聚着汗水与坚持。
+                    </p >
+                    <ul class="medal-list">
+                        <li><span>辽宁省青少年游泳锦标赛</span><span class="honor">女子仰泳 第一名 🥇</span></li>
+                        <li><span>大连市青少年游泳比赛</span><span class="honor">多项前三名 🥈</span></li>
+                        <li><span>省级、市级多项游泳赛事</span><span>优秀运动员称号</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块2：视觉画廊（画作长廊） -->
+        <section id="gallery">
+            <h2>🎨 画作长廊</h2>
+            <p style="text-align: center; color: #a0aec0; margin-top: -25px; margin-bottom: 30px; font-size: 14px;">（提示：这里可以存放平时练习的素描、水彩，或是比赛和训练的精彩瞬间）</p >
+            <div class="gallery-grid">
+                <!-- 照片1 -->
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=500');"></div>
+                    <div class="gallery-desc">🎨 日常绘画作品：用斑斓色彩描绘想象世界</div>
+                </div>
+                <!-- 照片2 -->
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('https://images.unsplash.com/photo-1519315901367-f34ff9154487?q=80&w=500');"></div>
+                    <div class="gallery-desc">🏊‍♀️ 赛场瞬间：出发台上的全神贯注</div>
+                </div>
+                <!-- 照片3 -->
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background-image: url('https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?q=80&w=500');"></div>
+                    <div class="gallery-desc">🏆 辽宁省锦标赛颁奖台上的高光时刻</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块3：校园生活 -->
+        <section id="school">
+            <h2>🎒 校园生活</h2>
+            <div class="school-grid">
+                <!-- 校园卡片1 -->
+                <div class="school-card">
+                    <h3>📝 探索新知</h3>
+                    <p>步入初一，不仅科目变得更加丰富，也接触到了更多有趣的学科视角。在多姿多彩的课堂上，和同学们一起讨论、思考，正在慢慢摸索出属于自己的高效学习节奏。</p >
+                </div>
+                <!-- 校园卡片2 -->
+                <div class="school-card">
+                    <h3>🤝 挚友相伴</h3>
+                    <p>很幸运在班级里结识了一群同样富有朝气的小伙伴。无论是课间的欢声笑语，还是运动会上的并肩呐喊，这些纯粹的友谊都是我初中生活里最珍贵的宝藏。</p >
+                </div>
+                <!-- 校园卡片3 -->
+                <div class="school-card">
+                    <h3>🌟 课外实践</h3>
+                    <p>积极参与学校举办的各类文化艺术节和社团活动。在赛场之外，校园里的小舞台也让我有机会把画笔下的创意分享给更多的人，让初一的生活闪闪发光。</p >
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块4：作文展示（文墨馨香） -->
+        <section id="writing">
+            <h2>✍️ 文墨馨香</h2>
+            <div class="article-list">
+                <!-- 作文1 -->
+                <div class="article-card">
+                    <div class="article-title">《那抹湛蓝的池水》</div>
+                    <div class="article-meta">发布于初一上学期 · 叙事随笔</div>
+                    <div class="article-excerpt">
+                        每当耳边响起尖锐的哨声，我都仿佛能听见自己心跳的声音。从大连到沈阳，那条长长的泳道仿佛是我用手一下一下丈量出来的。仰泳的时候，我只能看见高高的天花板或者蔚蓝的天空，但那一刻，我知道终点就在前方……
+                    </div>
+                </div>
+                <!-- 作文2 -->
+                <div class="article-card">
+                    <div class="article-title">《当画笔遇见调色盘》</div>
+                    <div class="article-meta">发布于艺术随笔 · 心情</div>
+                    <div class="article-excerpt">
+                        水粉在纸上慢慢晕开，就像夏天大连海边的浪花。游泳给了我速度，而绘画给了我静谧。在色彩的世界里，我可以是任何一个梦境的主角……
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>&copy; 2026 宁光集 (ninglight). 记录一个女孩的艺术与水之梦.</p >
+    </footer>
+
 </body>
 </html>
